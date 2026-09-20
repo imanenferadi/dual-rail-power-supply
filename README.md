@@ -6,7 +6,7 @@ I built the whole thing at home, and the one piece of equipment I didn't have wa
 
 ## The power supply
 
-It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes, mostly because of their low forward drop), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±12.7V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
+It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes — low forward drop so they don't waste much heat, handle up to 3A, and recover fast), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±12.7V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
 
 There's a bit of protection built in too — diodes across each regulator to stop it from getting fried if the output caps discharge backwards or someone hooks up a battery, a bypass cap on the ADJ pin to keep ripple out of the feedback, and a bleeder resistor so the filter caps don't stay charged after you switch it off. That final regulator topology, protection diodes and all, is basically the circuit Dr. Alavi gave us in the course handout — the sizing, the simulation, and the actual build and testing were mine, but I didn't invent the topology from scratch.
 
@@ -46,6 +46,8 @@ Both transformer secondary windings, 180° apart like you'd expect from a center
 Since I didn't have a real scope at home, I needed some way to actually look at the waveforms instead of just trusting the math. The idea was simple enough: read the signal with an Arduino's ADC and plot it on a laptop.
 
 The tricky part is that the Arduino can only read 0–5V, and the transformer swings up to about ±20V, so I had to build a small resistor-divider and level-shifting circuit to squeeze that down into a safe range centered around 2.5V. I worked the resistor values out by hand (superposition, mostly) rather than just guessing and checking.
+
+One thing I almost got wrong: a multimeter reads RMS, not peak, and I'd sized the first version of the divider around the RMS number. The actual instantaneous swing is √2 times higher than that, which is exactly the kind of gap that quietly pushes an ADC pin past 5V and kills it. Caught it before wiring anything up, redid the math with Vpeak = √2 × Vrms, and bumped the divider resistor up (33kΩ → 47kΩ) for extra margin.
 
 - [`ArduinoCode.ino`](arduino-oscilloscope/firmware/ArduinoCode.ino) just reads both analog pins and streams them over serial.
 - [`oscilloscope.py`](arduino-oscilloscope/visualizer/oscilloscope.py) reads that serial data and plots it live with matplotlib — shows Vpp/Vmax/Vmin/Vrms for each channel, lets you toggle channels on and off, and you can pause the plot by hitting spacebar.
