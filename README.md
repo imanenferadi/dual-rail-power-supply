@@ -60,10 +60,16 @@ Worked out to about 26mV of resolution, which turned out to be good enough to ac
 |---|---|
 | ![Level shifter board](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Level shifter schematic](arduino-oscilloscope/photos/level-shifter-schematic.png) |
 | ![LTspice check of the transformer input before scaling it down](arduino-oscilloscope/photos/transformer-input-simulation.jpg) | ![LTspice check of the A0 pin after scaling](arduino-oscilloscope/photos/a0-pin-simulation.jpg) |
-| ![Live capture: transformer secondary, unfiltered](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
+| ![Live capture: transformer secondary, unfiltered](arduino-oscilloscope/photos/live-two-channel-capture.jpg) | ![Same test, run again a bit later](arduino-oscilloscope/photos/live-capture-transformer-repeat.png) |
 | ![Live capture: right after the bridge rectifier](arduino-oscilloscope/photos/live-capture-after-bridge-rectifier.png) | ![Live capture: after the filter caps](arduino-oscilloscope/photos/live-capture-both-rails-filtered.png) |
 
-Those last four are the actual point: simulate a stage first, then point the home-built scope at the real thing and see if they agree. They did, most of the time.
+Those are the actual point: simulate a stage first, then point the home-built scope at the real thing and see if they agree. They did, most of the time. The repeat capture next to the raw transformer shot is just a second run of the same test — same ~18V amplitude both times, which was reassuring on its own, since it meant the readings weren't just noise.
+
+I also used the scope for quick sanity checks that weren't really "waveforms" — mostly flat DC-ish readings a volt or two off zero, just to confirm both channels were alive and behaving before trusting them on a real signal:
+
+| | |
+|---|---|
+| ![Quick DC-level check, channels near zero](arduino-oscilloscope/photos/live-capture-dc-check-1.png) | ![Another DC-level check](arduino-oscilloscope/photos/live-capture-dc-check-2.png) |
 
 ## Course context
 
