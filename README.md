@@ -65,12 +65,6 @@ Worked out to about 26mV of resolution, which turned out to be good enough to ac
 
 Those are the actual point: simulate a stage first, then point the home-built scope at the real thing and see if they agree. They did, most of the time. The repeat capture next to the raw transformer shot is just a second run of the same test — same ~18V amplitude both times, which was reassuring on its own, since it meant the readings weren't just noise.
 
-I also used the scope for quick sanity checks that weren't really "waveforms" — mostly flat DC-ish readings a volt or two off zero, just to confirm both channels were alive and behaving before trusting them on a real signal:
-
-| | |
-|---|---|
-| ![Quick DC-level check, channels near zero](arduino-oscilloscope/photos/live-capture-dc-check-1.png) | ![Another DC-level check](arduino-oscilloscope/photos/live-capture-dc-check-2.png) |
-
 ## Course context
 
 This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full lab report is at [`report/lab-report-fa.pdf`](report/lab-report-fa.pdf) — it's in Persian and goes through the theory, simulation, and practical results for every block in a lot more depth than this README.
