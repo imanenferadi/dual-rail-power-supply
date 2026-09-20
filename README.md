@@ -110,12 +110,13 @@ Full schematic (positive rail — the negative rail mirrors this exactly, just w
 | | |
 |---|---|
 | ![Verifying the output on my own multimeter](power-supply/photos/multimeter-verification.jpg) | ![Output test with crocodile clips](power-supply/photos/output-test-croc-clips-1.jpg) |
+| ![Short-circuit test — output collapses to 0V while the regulator current-limits](power-supply/photos/final-unit-display.jpg) | |
 
 **Final unit:**
 
 | | |
 |---|---|
-| ![Final unit, front](power-supply/photos/final-unit-front.jpg) | ![Final unit's display](power-supply/photos/final-unit-display.jpg) |
+| ![Final unit, front](power-supply/photos/final-unit-front.jpg) | |
 
 ## Simulation vs Hardware
 
