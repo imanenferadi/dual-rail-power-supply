@@ -1,12 +1,12 @@
-# Adjustable Dual-Rail Power Supply (±13V) + Arduino Oscilloscope
+# Adjustable Dual-Rail Power Supply (±12.7V) + Arduino Oscilloscope
 
-This is an adjustable ±13V power supply with a positive and negative rail, built for my Circuits Lab I course at Sharif University of Technology. For every stage of it — the rectifier, the filter, the regulator — I first did the math by hand, then checked it in LTspice, then checked it again on the actual hardware.
+This is an adjustable dual-rail power supply, positive and negative, going up to about ±12.7V, built for my Circuits Lab I course at Sharif University of Technology. For every stage of it — the rectifier, the filter, the regulator — I first did the math by hand, then checked it in LTspice, then checked it again on the actual hardware.
 
 I built the whole thing at home, and the one piece of equipment I didn't have was an oscilloscope. So before I could really test anything, I ended up building one out of an Arduino and some Python, and used that for basically every waveform in this project. More on that below.
 
 ## The power supply
 
-It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes, mostly because of their low forward drop), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±13V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
+It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes, mostly because of their low forward drop), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±12.7V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
 
 There's a bit of protection built in too — diodes across each regulator to stop it from getting fried if the output caps discharge backwards or someone hooks up a battery, a bypass cap on the ADJ pin to keep ripple out of the feedback, and a bleeder resistor so the filter caps don't stay charged after you switch it off.
 
@@ -48,6 +48,6 @@ Worked out to about 26mV of resolution, which turned out to be good enough to ac
 
 That second photo is a live capture from the scope — two channels of the transformer's secondary, 180° out of phase like you'd expect from a center tap. Good sanity check that the whole thing actually worked.
 
-## The full report
+## Course context
 
-This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full lab report is in Persian and goes through the theory, simulation, and practical results for every block — it's at [`report/lab-report-fa.pdf`](report/lab-report-fa.pdf) if you want the details.
+This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full write-up (in Persian) goes through the theory, simulation, and practical results for every block in more depth than this README — since the course reuses this project most terms, I'm not posting the complete solved report publicly, but I'm happy to share it directly if you're curious.
