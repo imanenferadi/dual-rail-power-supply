@@ -1,31 +1,18 @@
 # Adjustable Dual-Rail Power Supply (±13V) + Arduino Oscilloscope
 
-A linear, adjustable ±13V dual-rail DC bench power supply, designed and built for
-Sharif University of Technology's Circuits Lab I (Dr. Alavi). Every stage — rectifier,
-filter, and regulator — was validated three ways: hand calculation, LTspice simulation,
-and real hardware measurement.
+This is an adjustable ±13V power supply with a positive and negative rail, built for my Circuits Lab I course at Sharif University of Technology. For every stage of it — the rectifier, the filter, the regulator — I first did the math by hand, then checked it in LTspice, then checked it again on the actual hardware.
 
-This was built at home, where I didn't have access to lab equipment like an
-oscilloscope. So I built one myself first — a second, self-contained project:
-a **two-channel Arduino-based oscilloscope** with a live matplotlib GUI, used
-throughout to capture and verify every waveform in the power supply.
+I built the whole thing at home, and the one piece of equipment I didn't have was an oscilloscope. So before I could really test anything, I ended up building one out of an Arduino and some Python, and used that for basically every waveform in this project. More on that below.
 
-## Power supply
+## The power supply
 
-| | |
-|---|---|
-| Topology | Center-tapped transformer → full-bridge rectifier → capacitive filter → LM317 / LM337 adjustable regulators |
-| Output | 0 to ±13V, adjustable via a dual (1kΩ + 100Ω series) potentiometer |
-| Rectifier diodes | 1N5822 Schottky (low forward drop, fast recovery) |
-| Filter capacitors | 2200µF per rail, sized for <100Hz ripple with a 10Ω / 1.5A load assumption |
-| Protection | Input/output diodes on each regulator (reverse-current, discharge, reverse-battery protection), ADJ-pin bypass capacitor for ripple rejection, output capacitor for transient response, discharge resistor across the filter caps |
-| Enclosure | Custom metal case with fuse, IEC inlet, power switch, and a digital V/A display |
+It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes, mostly because of their low forward drop), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±13V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
 
-Full design derivation (bridge sizing, filter capacitor sizing, LM317/LM337 resistor
-network, protection diode reasoning) is in [`power-supply/`](power-supply).
+There's a bit of protection built in too — diodes across each regulator to stop it from getting fried if the output caps discharge backwards or someone hooks up a battery, a bypass cap on the ADJ pin to keep ripple out of the feedback, and a bleeder resistor so the filter caps don't stay charged after you switch it off.
 
-**Verified output:** ~12.7V measured on a Victor VC97 multimeter, matching the
-built-in digital display and the LTspice sweep within a few tens of millivolts.
+Everything's in a metal enclosure with a fuse, an IEC power inlet, a switch, and a small digital V/A display on the front. I checked the final output with my own multimeter and got about 12.7V, which lined up with both the display and what LTspice predicted, so I was pretty happy with that.
+
+The full derivation — how I sized the bridge, the filter caps, the LM317/LM337 resistors, why the protection diodes are there — is written up in [`power-supply/`](power-supply).
 
 ### Photos
 
@@ -38,27 +25,20 @@ built-in digital display and the LTspice sweep within a few tens of millivolts.
 
 ![Schematic](power-supply/schematics/schematic.png)
 
-LTspice parametric sweep of the adjustment resistor, showing the regulated output
-settling across its full adjustable range:
+Here's an LTspice sweep of the adjustment resistor, showing where the output settles across its full range:
 
 ![Output voltage sweep](power-supply/simulation/output-voltage-sweep.png)
 
-## Arduino oscilloscope
+## The Arduino oscilloscope
 
-To measure and verify waveforms without lab equipment at home, I built a
-two-channel "oscilloscope" from an Arduino and a Python visualizer:
+Since I didn't have a real scope at home, I needed some way to actually look at the waveforms instead of just trusting the math. The idea was simple enough: read the signal with an Arduino's ADC and plot it on a laptop.
 
-- A resistor-divider + level-shifting front end (derived analytically, not just
-  guessed) scales the transformer's ±20V swing down into the Arduino's safe
-  0–5V ADC window, centered at 2.5V.
-- [`ArduinoCode.ino`](arduino-oscilloscope/firmware/ArduinoCode.ino) streams both
-  ADC channels over serial at 115200 baud.
-- [`oscilloscope.py`](arduino-oscilloscope/visualizer/oscilloscope.py) is a live
-  two-channel viewer built on matplotlib: per-channel Vpp/Vmax/Vmin/Vrms readouts,
-  channel show/hide toggles, and pause/resume on the spacebar.
+The tricky part is that the Arduino can only read 0–5V, and the transformer swings up to about ±20V, so I had to build a small resistor-divider and level-shifting circuit to squeeze that down into a safe range centered around 2.5V. I worked the resistor values out by hand (superposition, mostly) rather than just guessing and checking.
 
-Measured ADC resolution: **~26.4mV**, accurate enough to validate every stage of
-the power supply against its LTspice prediction.
+- [`ArduinoCode.ino`](arduino-oscilloscope/firmware/ArduinoCode.ino) just reads both analog pins and streams them over serial.
+- [`oscilloscope.py`](arduino-oscilloscope/visualizer/oscilloscope.py) reads that serial data and plots it live with matplotlib — shows Vpp/Vmax/Vmin/Vrms for each channel, lets you toggle channels on and off, and you can pause the plot by hitting spacebar.
+
+Worked out to about 26mV of resolution, which turned out to be good enough to actually verify every stage of the power supply against the simulations.
 
 ### Photos
 
@@ -66,13 +46,8 @@ the power supply against its LTspice prediction.
 |---|---|
 | ![Level shifter board](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Live two-channel capture](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
 
-The live capture above shows two channels of the transformer's secondary windings —
-180° out of phase, as expected from the center tap — captured and measured entirely
-through the home-built scope.
+That second photo is a live capture from the scope — two channels of the transformer's secondary, 180° out of phase like you'd expect from a center tap. Good sanity check that the whole thing actually worked.
 
-## Course context
+## The full report
 
-Built as the term project for **Circuits Lab I**, Sharif University of Technology,
-Spring 2026 (Dr. Alavi). The full lab report — in Persian, with the theory,
-simulation, and practical measurement for every block — is at
-[`report/lab-report-fa.pdf`](report/lab-report-fa.pdf).
+This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full lab report is in Persian and goes through the theory, simulation, and practical results for every block — it's at [`report/lab-report-fa.pdf`](report/lab-report-fa.pdf) if you want the details.
