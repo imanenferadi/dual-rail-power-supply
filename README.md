@@ -5,9 +5,10 @@ Sharif University of Technology's Circuits Lab I (Dr. Alavi). Every stage — re
 filter, and regulator — was validated three ways: hand calculation, LTspice simulation,
 and real hardware measurement.
 
-Because a real oscilloscope wasn't available in the lab, I built a second, self-contained
-project first: a **two-channel Arduino-based oscilloscope** with a live matplotlib GUI,
-used throughout to capture and verify every waveform in the power supply.
+This was built at home, where I didn't have access to lab equipment like an
+oscilloscope. So I built one myself first — a second, self-contained project:
+a **two-channel Arduino-based oscilloscope** with a live matplotlib GUI, used
+throughout to capture and verify every waveform in the power supply.
 
 ## Power supply
 
@@ -44,8 +45,8 @@ settling across its full adjustable range:
 
 ## Arduino oscilloscope
 
-To measure and verify waveforms without lab equipment, I built a two-channel
-"oscilloscope" from an Arduino and a Python visualizer:
+To measure and verify waveforms without lab equipment at home, I built a
+two-channel "oscilloscope" from an Arduino and a Python visualizer:
 
 - A resistor-divider + level-shifting front end (derived analytically, not just
   guessed) scales the transformer's ±20V swing down into the Arduino's safe
