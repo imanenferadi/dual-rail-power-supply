@@ -58,9 +58,9 @@ Worked out to about 26mV of resolution, which turned out to be good enough to ac
 
 | | |
 |---|---|
-| ![Level shifter board, final version](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Level shifter board, an earlier revision](arduino-oscilloscope/photos/level-shifter-board-early-revision.jpg) |
-| ![Level shifter schematic](arduino-oscilloscope/photos/level-shifter-schematic.png) | ![LTspice check of the transformer input before scaling it down](arduino-oscilloscope/photos/transformer-input-simulation.jpg) |
-| ![LTspice check of the A0 pin after scaling](arduino-oscilloscope/photos/a0-pin-simulation.jpg) | ![Live capture: transformer secondary, unfiltered](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
+| ![Level shifter board](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Level shifter schematic](arduino-oscilloscope/photos/level-shifter-schematic.png) |
+| ![LTspice check of the transformer input before scaling it down](arduino-oscilloscope/photos/transformer-input-simulation.jpg) | ![LTspice check of the A0 pin after scaling](arduino-oscilloscope/photos/a0-pin-simulation.jpg) |
+| ![Live capture: transformer secondary, unfiltered](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
 | ![Live capture: right after the bridge rectifier](arduino-oscilloscope/photos/live-capture-after-bridge-rectifier.png) | ![Live capture: after the filter caps](arduino-oscilloscope/photos/live-capture-both-rails-filtered.png) |
 
 Those last four are the actual point: simulate a stage first, then point the home-built scope at the real thing and see if they agree. They did, most of the time.
