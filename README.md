@@ -86,7 +86,7 @@ Each stage was simulated before being built:
 ![Transformer secondary, both channels](power-supply/simulation/transformer-secondary-both-channels.png)
 *Both transformer secondary windings, 180° apart as expected from the center tap.*
 
-Full schematic:
+Full schematic (positive rail — the negative rail mirrors this exactly, just with an LM337 in place of the LM317):
 
 ![Schematic](power-supply/schematics/schematic.png)
 
