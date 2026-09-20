@@ -18,8 +18,12 @@ The full derivation — how I sized the bridge, the filter caps, the LM317/LM337
 
 | | |
 |---|---|
-| ![Final unit](power-supply/photos/final-unit-front.jpg) | ![Display](power-supply/photos/final-unit-display.jpg) |
-| ![Internal wiring](power-supply/photos/internal-wiring.jpg) | ![Multimeter verification](power-supply/photos/multimeter-verification.jpg) |
+| ![Final unit, front](power-supply/photos/final-unit-front.jpg) | ![Final unit's display](power-supply/photos/final-unit-display.jpg) |
+| ![Internal wiring](power-supply/photos/internal-wiring.jpg) | ![Back panel — fuse and IEC inlet](power-supply/photos/enclosure-back-panel.jpg) |
+| ![Filter cap board](power-supply/photos/filter-board-front.jpg) | ![Filter cap board, soldered side](power-supply/photos/filter-board-soldered-back.jpg) |
+| ![Regulator on breadboard](power-supply/photos/regulator-breadboard-test.jpg) | ![Verifying the output on my own multimeter](power-supply/photos/multimeter-verification.jpg) |
+| ![Output test with crocodile clips](power-supply/photos/output-test-croc-clips-1.jpg) | ![Output test, different load](power-supply/photos/output-test-croc-clips-2.jpg) |
+| ![All the parts laid out before assembly](power-supply/photos/components-layout.jpg) | |
 
 ### Schematic & simulation
 
@@ -28,6 +32,14 @@ The full derivation — how I sized the bridge, the filter caps, the LM317/LM337
 Here's an LTspice sweep of the adjustment resistor, showing where the output settles across its full range:
 
 ![Output voltage sweep](power-supply/simulation/output-voltage-sweep.png)
+
+And the filter caps charging up after power-on, settling into steady ripple:
+
+![Filter cap charging transient](power-supply/simulation/filter-cap-charging.png)
+
+Both transformer secondary windings, 180° apart like you'd expect from a center tap:
+
+![Transformer secondary, both channels](power-supply/simulation/transformer-secondary-both-channels.png)
 
 ## The Arduino oscilloscope
 
@@ -40,14 +52,17 @@ The tricky part is that the Arduino can only read 0–5V, and the transformer sw
 
 Worked out to about 26mV of resolution, which turned out to be good enough to actually verify every stage of the power supply against the simulations.
 
-### Photos
+### Photos & captures
 
 | | |
 |---|---|
-| ![Level shifter board](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Live two-channel capture](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
+| ![Level shifter board, final version](arduino-oscilloscope/photos/level-shifter-board.jpg) | ![Level shifter board, an earlier revision](arduino-oscilloscope/photos/level-shifter-board-early-revision.jpg) |
+| ![Level shifter schematic](arduino-oscilloscope/photos/level-shifter-schematic.png) | ![LTspice check of the transformer input before scaling it down](arduino-oscilloscope/photos/transformer-input-simulation.jpg) |
+| ![LTspice check of the A0 pin after scaling](arduino-oscilloscope/photos/a0-pin-simulation.jpg) | ![Live capture: transformer secondary, unfiltered](arduino-oscilloscope/photos/live-two-channel-capture.jpg) |
+| ![Live capture: right after the bridge rectifier](arduino-oscilloscope/photos/live-capture-after-bridge-rectifier.png) | ![Live capture: after the filter caps](arduino-oscilloscope/photos/live-capture-both-rails-filtered.png) |
 
-That second photo is a live capture from the scope — two channels of the transformer's secondary, 180° out of phase like you'd expect from a center tap. Good sanity check that the whole thing actually worked.
+Those last four are the actual point: simulate a stage first, then point the home-built scope at the real thing and see if they agree. They did, most of the time.
 
 ## Course context
 
-This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full write-up (in Persian) goes through the theory, simulation, and practical results for every block in more depth than this README — since the course reuses this project most terms, I'm not posting the complete solved report publicly, but I'm happy to share it directly if you're curious.
+This was originally a term project for Circuits Lab I at Sharif University of Technology (spring 2026, Dr. Alavi). The full lab report is at [`report/lab-report-fa.pdf`](report/lab-report-fa.pdf) — it's in Persian and goes through the theory, simulation, and practical results for every block in a lot more depth than this README.
