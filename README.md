@@ -8,7 +8,7 @@ I built the whole thing at home, and the one piece of equipment I didn't have wa
 
 It's a fairly standard linear supply: a center-tapped transformer feeding a full-bridge rectifier (1N5822 Schottky diodes, mostly because of their low forward drop), big 2200µF filter caps on each rail, and then an LM317/LM337 pair doing the actual regulation. Output goes from 0 to about ±12.7V, set with two potentiometers in series (1kΩ + 100Ω) so I could get fine adjustment without needing an expensive multi-turn pot.
 
-There's a bit of protection built in too — diodes across each regulator to stop it from getting fried if the output caps discharge backwards or someone hooks up a battery, a bypass cap on the ADJ pin to keep ripple out of the feedback, and a bleeder resistor so the filter caps don't stay charged after you switch it off.
+There's a bit of protection built in too — diodes across each regulator to stop it from getting fried if the output caps discharge backwards or someone hooks up a battery, a bypass cap on the ADJ pin to keep ripple out of the feedback, and a bleeder resistor so the filter caps don't stay charged after you switch it off. That final regulator topology, protection diodes and all, is basically the circuit Dr. Alavi gave us in the course handout — the sizing, the simulation, and the actual build and testing were mine, but I didn't invent the topology from scratch.
 
 Everything's in a metal enclosure with a fuse, an IEC power inlet, a switch, and a small digital V/A display on the front. I checked the final output with my own multimeter and got about 12.7V, which lined up with both the display and what LTspice predicted, so I was pretty happy with that.
 
