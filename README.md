@@ -54,8 +54,8 @@ two-channel "oscilloscope" from an Arduino and a Python visualizer:
 - [`ArduinoCode.ino`](arduino-oscilloscope/firmware/ArduinoCode.ino) streams both
   ADC channels over serial at 115200 baud.
 - [`oscilloscope.py`](arduino-oscilloscope/visualizer/oscilloscope.py) is a live
-  two-channel viewer built on matplotlib: real-time Vpp/Vmax/Vmin/Vavg/Vrms per
-  channel, pause/resume, buffer clear, CSV/PNG export, and a toggleable FFT panel.
+  two-channel viewer built on matplotlib: per-channel Vpp/Vmax/Vmin/Vrms readouts,
+  channel show/hide toggles, and pause/resume on the spacebar.
 
 Measured ADC resolution: **~26.4mV**, accurate enough to validate every stage of
 the power supply against its LTspice prediction.
@@ -73,5 +73,6 @@ through the home-built scope.
 ## Course context
 
 Built as the term project for **Circuits Lab I**, Sharif University of Technology,
-Spring 2026 (Dr. Alavi). The full lab report (in Persian) walks through the theory,
-simulation, and practical measurement for every block.
+Spring 2026 (Dr. Alavi). The full lab report — in Persian, with the theory,
+simulation, and practical measurement for every block — is at
+[`report/lab-report-fa.pdf`](report/lab-report-fa.pdf).
